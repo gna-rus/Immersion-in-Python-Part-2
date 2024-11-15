@@ -1,0 +1,32 @@
+# Напишите программу, которая принимает две строки вида “a/b” - дробь с числителем и знаменателем.
+# Программа должна возвращать сумму и произведение* дробей. Для проверки своего кода используйте модуль fractions
+from fractions import Fraction
+
+def cut_of_fractions(str_fractions):
+    """
+    Функция для разделению дробей на числитель и знаменатель. Записывает результат в список
+    """
+    int_list = str_fractions.split('/')
+    int_list = [int(i) for i in int_list]
+    return int_list
+
+def calculations_of_fractions(list_str1, list_str2):
+    common_landmark = list_str2[1]*list_str1[1]
+    
+    sum_of_fractions = ((list_str1[0]*list_str2[1]) + (list_str2[0]*list_str1[1]))
+    multiplication_of_fractions = (list_str1[0] * list_str1[0])
+    
+    sum_in_str = f'{sum_of_fractions}/{common_landmark}'
+    mult_in_str = f'{multiplication_of_fractions}/{common_landmark}'
+    
+    return sum_in_str, mult_in_str
+
+str1 = '12/5'
+str2 = '121/11'
+
+list_str1 = cut_of_fractions(str1)
+list_str2 = cut_of_fractions(str2)
+
+print(Fraction(12, 5)+Fraction(121, 11))
+print(Fraction(12, 5)*Fraction(121, 11))
+print(calculations_of_fractions(list_str1, list_str2))
