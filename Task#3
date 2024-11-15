@@ -2,31 +2,55 @@
 # Программа должна возвращать сумму и произведение* дробей. Для проверки своего кода используйте модуль fractions
 from fractions import Fraction
 
+def common_Fraction(a, b):
+    """
+    Функция поиска общего делителя двух чисел
+    return: общий делитель для двух int
+    """
+    while b != 0:
+        a, b = b, a % b
+    return a
+
 def cut_of_fractions(str_fractions):
     """
     Функция для разделению дробей на числитель и знаменатель. Записывает результат в список
+    return: список [<знаменатель>,<числитель>]
     """
     int_list = str_fractions.split('/')
     int_list = [int(i) for i in int_list]
     return int_list
 
 def calculations_of_fractions(list_str1, list_str2):
+    """  
+    Функция сумирования и умножения дробей
+    return: возвращает дробь в формате <а>/<в>
+    """
     common_landmark = list_str2[1]*list_str1[1]
-    
+
     sum_of_fractions = ((list_str1[0]*list_str2[1]) + (list_str2[0]*list_str1[1]))
-    multiplication_of_fractions = (list_str1[0] * list_str1[0])
-    
-    sum_in_str = f'{sum_of_fractions}/{common_landmark}'
-    mult_in_str = f'{multiplication_of_fractions}/{common_landmark}'
-    
+    multiplication_of_fractions = (list_str1[0] * list_str2[0])
+
+    # Ищу общий делитель для суммы и для умноожения
+    common_Fraction1 = common_Fraction(sum_of_fractions, common_landmark)
+    common_Fraction2 = common_Fraction(multiplication_of_fractions, common_landmark)
+
+    sum_in_str = f'{int(sum_of_fractions/common_Fraction1)}/{int(common_landmark/common_Fraction1)}'
+    mult_in_str = f'{int(multiplication_of_fractions/common_Fraction2)}/{int(common_landmark/common_Fraction2)}'
+
     return sum_in_str, mult_in_str
 
-str1 = '12/5'
-str2 = '121/11'
+
+str1 = input("Введите дробь 1 в фрмате <а>/<в>: ")
+str2 = input("Введите дробь 2 в фрмате <а>/<в>: ")
 
 list_str1 = cut_of_fractions(str1)
 list_str2 = cut_of_fractions(str2)
 
-print(Fraction(12, 5)+Fraction(121, 11))
-print(Fraction(12, 5)*Fraction(121, 11))
-print(calculations_of_fractions(list_str1, list_str2))
+
+print(f"Сумма дробей через Fraction: {Fraction(list_str1[0], list_str1[1])+Fraction(list_str2[0], list_str2[1])}")
+print(f"Перемножение дробей через Fraction: {Fraction(list_str1[0], list_str1[1])*Fraction(list_str2[0], list_str2[1])}")
+print()
+
+result = calculations_of_fractions(list_str1, list_str2)
+print(f"Сумма дробей: {result[0]}")
+print(f"Перемножение дробей: {result[1]}")
